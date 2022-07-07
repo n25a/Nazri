@@ -3,18 +3,19 @@ from copy import deepcopy
 
 from rest_framework.authtoken.models import Token
 
-from toolkit import validate_error, existence_error, ERROR
+from internals.toolkit import validate_error, existence_error, ERROR
 from apps.user.serializers import CostumUserSerializer, CostumUserAvatarSerializer
-from apps.user.models import CostumUser
+from apps.user.models import CustomUser
+
 
 # --------------------------- mobile_number validation -------------------------------
 
 
 def mobile_number_validator(mobile_number: str) -> bool:
     if (
-        (mobile_number is not None)
-        and (mobile_number[0:2] == "09")
-        and (len(mobile_number) == 11)
+            (mobile_number is not None)
+            and (mobile_number[0:2] == "09")
+            and (len(mobile_number) == 11)
     ):
         return True
     return False
@@ -29,15 +30,12 @@ def create_token(user_obj: object) -> str:
     return token_value
 
 
-def create_user(name: str, mobile_number: str, password: str) -> CostumUser:
-
-    user_obj = CostumUser.objects.create_user(
+def create_user(name: str, mobile_number: str, password: str) -> CustomUser:
+    user_obj = CustomUser.objects.create_user(
         name=name,
         mobile_number=mobile_number,
         password=password,
     )
-
-    # it saved in create_user
     return user_obj
 
 
@@ -60,38 +58,22 @@ def upload_avatar(data: Dict) -> Tuple[Optional[dict], ERROR]:
 
 
 def get_user_obj_by_mobile_number(
-    mobile_number: str,
-) -> Tuple[Optional[CostumUser], ERROR]:
+        mobile_number: str,
+) -> Tuple[Optional[CustomUser], ERROR]:
     err = None
-
-    user_obj = CostumUser.objects.filter(mobile_number=mobile_number).first()
+    user_obj = CustomUser.objects.filter(mobile_number=mobile_number).first()
     if user_obj is None:
-        err = existence_error("CostumUser")
+        err = existence_error("CustomUser")
         return None, err
 
     return user_obj, err
 
 
-def get_user_obj_by_mobile_numbe(
-    mobile_number: str,
-) -> Tuple[Optional[CostumUser], ERROR]:
+def get_user_obj_by_id(_id: int) -> Tuple[Optional[CustomUser], ERROR]:
     err = None
-    user_obj = CostumUser.objects.filter(
-        mobile_number=mobile_number,
-    ).first()
+    user_obj = CustomUser.objects.filter(id=_id).first()
     if user_obj is None:
-        err = existence_error("CostumUser")
-        return None, err
-
-    return user_obj, err
-
-
-def get_user_obj_by_id(id: int) -> Tuple[Optional[CostumUser], ERROR]:
-    err = None
-
-    user_obj = CostumUser.objects.filter(id=id).first()
-    if user_obj is None:
-        err = existence_error("CostumUser")
+        err = existence_error("CustomUser")
         return None, err
 
     return user_obj, err
@@ -99,29 +81,26 @@ def get_user_obj_by_id(id: int) -> Tuple[Optional[CostumUser], ERROR]:
 
 def get_user_data(user_obj: object) -> Tuple[Optional[dict], ERROR]:
     err = None
-
     if user_obj is None:
-        err = existence_error("CostumUser")
+        err = existence_error("CustomUser")
         return None, err
 
     user_serialized = CostumUserSerializer(user_obj)
-
     return user_serialized.data, err
 
 
-def get_user_objs() -> Optional[List[CostumUser]]:
-    user_objs = CostumUser.objects.all()
-
+def get_user_objs() -> Optional[List[CustomUser]]:
+    user_objs = CustomUser.objects.all()
     return user_objs
 
 
 def get_user_all_data(
-    user_objs: List[CostumUser],
-) -> Tuple[Optional[List[CostumUser]], ERROR]:
+        user_objs: List[CustomUser],
+) -> Tuple[Optional[List[CustomUser]], ERROR]:
     err = None
 
     if user_objs.count() == 0:
-        err = existence_error("CostumUser")
+        err = existence_error("CustomUser")
         return None, err
 
     users_serialized = CostumUserSerializer(
@@ -172,22 +151,3 @@ def set_password(user_obj: object, data: Dict) -> Tuple[Optional[dict], ERROR]:
     user_serialized.save()
 
     return user_serialized.data, err
-
-
-# --------------------------- DEL -----------------------------------
-
-
-def delete_avatar(user_id: int) -> ERROR:
-    err = None
-
-    user_obj = CostumUser.objects.filter(
-        id=user_id,
-    ).first()
-
-    if user_obj is None:
-        err = existence_error("CostumUser")
-        return err
-
-    user_obj.avatar.delete()
-
-    return err

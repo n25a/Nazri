@@ -33,7 +33,7 @@ def existence_error(object_name: str) -> ERROR:
 
 
 def response_creator(
-    data: Optional[dict] = None,
+    data: Optional[dict, str] = None,
     status_code: int = 200,
     json_type: bool = False,
     status: str = "success",

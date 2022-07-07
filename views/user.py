@@ -1,19 +1,13 @@
-from copy import deepcopy
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
 
 import repositories.user as repo_user
-from toolkit.toolkit import response_creator
+from internals.toolkit import response_creator
 
 
 class SignUp(APIView):
     def post(self, request):
-
         mobile_number = request.data.get("mobile_number").strip()
         password = request.data.get("password")
 
@@ -60,55 +54,19 @@ class SignIn(APIView):
         if err:
             return err
 
-        if user_obj.check_password(password):
-            token = repo_user.create_token(user_obj)
-            return response_creator(
-                data={"token": token},
-                status="success",
-                status_code=200,
+        if not user_obj.check_password(password):
+            return Response(
+                {
+                    "status": "fail",
+                    "message": "permission denied."
+                },
+                status=status.HTTP_403_FORBIDDEN,
             )
 
-        return Response(
-            {"status": "fail", "message": "permission denied."},
-            status=status.HTTP_403_FORBIDDEN,
-        )
-
-
-class UploadAvatar(APIView):
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
-
-    def post(self, request):
-
-        data = deepcopy(request.data)
-        data["user"] = request.user.id
-
-        avatar_data, err = repo_user.upload_avatar(
-            data=request.data,
-        )
-        if err:
-            return err
-
+        token = repo_user.create_token(user_obj)
         return response_creator(
-            data={"avatar": avatar_data},
+            data={"token": token},
             status="success",
-            status_code=status.HTTP_201_CREATED,
+            status_code=200,
         )
 
-
-class DeleteAvatar(APIView):
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def delete(self, request):
-
-        err = repo_user.delete_avatar(
-            user_id=request.user.id,
-        )
-        if err:
-            return err
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
