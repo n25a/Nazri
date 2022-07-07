@@ -4,9 +4,9 @@
 
 
 class Mysql:
-    name: str = ""
-    user: str = ""
-    password: str = ""
+    name: str = ''
+    user: str = ''
+    password: str = ''
 
 
 class Database:
@@ -38,7 +38,7 @@ class Celery:
 
 
 class Config:
-    app_name: str = ""
+    app_name: str = ''
     db: Database = Database()
     cache: Cache = Cache()
     celery: Celery = Celery()

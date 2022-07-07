@@ -2,8 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import sys
 import os
+
 from internals.config import wrapper as config_wrapper
 from internals.app import ascii_art
+
 
 def main():
     """Run administrative tasks."""
