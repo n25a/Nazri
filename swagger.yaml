@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Radak API
+  version: 0.1.9
+
+servers:
+  - url: http://api.radak.delta.com
+    description: Main (production) server
+  - url: http://staging-api.radak.delta.com
+    description: Internal staging server for testing
+
+
+paths:
+  '/tse/{day_incrementor}/data':
+    get:
+      tags:
+        - tse
+      summary: geetting data
+      parameters:
+        - in: path
+          name: day_incrementor
+          description: number of days to add to today's date'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TseData'
+        500:
+          description: 'internal server error'
+  
+
+components:
+  schemas:
+    TseData:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            tse_data:
+              type: array
+              items:
+                $ref: "#/definitions/Tse"
+
+definitions:
+  Tse:
+    type: object
+    properties:
+      subject:
+        type: string
+        example: "test"
+      window:
+        type: integer
+        example: 2
+      code:
+        type: string
+        example: "{if cnt < 6: return nil}"
+  

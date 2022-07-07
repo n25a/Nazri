@@ -1,0 +1,32 @@
+config:
+  app_name: "radak"
+  db:
+    mysql:
+      name:     "test"
+      user:     "test_user"
+      password: "password"
+    influx:
+      name:     "test"
+      user:     "test_user"
+      password: "password"
+      timeout:  10
+      token: ""
+  cache:
+    CACHE_TTL: 3600
+  celery:
+    redis_broker: false
+    rabbitMQ_broker: true
+app:
+  radak:
+    base_url: "http://radak"
+    timeout: 2
+  prodak:
+    base_url: "http://prodak"
+    timeout: 2
+  signal:
+    base_url: "http://signal"
+    timeout: 2
+  paas:
+    base_url: "http://paas"
+    timeout: 2
+  
