@@ -2,7 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import sys
 import os
-
+from internals.config import wrapper as config_wrapper
+from internals.app import ascii_art
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +20,6 @@ def main():
 
 
 if __name__ == '__main__':
+    ascii_art.project_name()
+    config_wrapper.wrapper()
     main()
