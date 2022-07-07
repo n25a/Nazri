@@ -11,7 +11,7 @@ isort:
 	- isort --skip-glob=.tox --reverse-sort --profile=black .
 
 flake8:
-	- flake8 --exclude='.tox' --exclude='__init__.py' --extend-exclude='*_pb2*.py' .
+	- flake8 --exclude='.tox','__init__.py','venv/','settings.py' --extend-exclude='*_pb2*.py' .
 
 blue:
 	- blue .

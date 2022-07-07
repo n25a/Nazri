@@ -12,8 +12,8 @@ def validate_error(serialized) -> ERROR:
     """
     return Response(
         {
-            "status": "fail",
-            "data": serialized.errors,
+            'status': 'fail',
+            'data': serialized.errors,
         },
         status=400,
     )
@@ -25,8 +25,8 @@ def existence_error(object_name: str) -> ERROR:
     """
     return Response(
         {
-            "status": "error",
-            "message": "Object {} does not exist!".format(object_name),
+            'status': 'error',
+            'message': 'Object {} does not exist!'.format(object_name),
         },
         status=400,
     )
@@ -36,21 +36,21 @@ def response_creator(
     data: Optional[dict, str] = None,
     status_code: int = 200,
     json_type: bool = False,
-    status: str = "success",
+    status: str = 'success',
 ) -> Response:
     """
     create response
     """
     if json_type:
         return {
-            "status": status,
-            "data": data,
+            'status': status,
+            'data': data,
         }
 
     return Response(
         {
-            "status": status,
-            "data": data,
+            'status': status,
+            'data': data,
         },
         status=status_code,
     )

@@ -4,18 +4,20 @@ from copy import deepcopy
 from rest_framework.authtoken.models import Token
 
 from internals.toolkit import validate_error, existence_error, ERROR
-from apps.user.serializers import CostumUserSerializer, CostumUserAvatarSerializer
+from apps.user.serializers import (
+    CostumUserSerializer,
+    CostumUserAvatarSerializer,
+)
 from apps.user.models import CustomUser
 
-
-# --------------------------- mobile_number validation -------------------------------
+# ---------------------- mobile_number validation ----------------------------
 
 
 def mobile_number_validator(mobile_number: str) -> bool:
     if (
-            (mobile_number is not None)
-            and (mobile_number[0:2] == "09")
-            and (len(mobile_number) == 11)
+        (mobile_number is not None)
+        and (mobile_number[0:2] == '09')
+        and (len(mobile_number) == 11)
     ):
         return True
     return False
@@ -26,7 +28,7 @@ def mobile_number_validator(mobile_number: str) -> bool:
 
 def create_token(user_obj: object) -> str:
     token, _ = Token.objects.get_or_create(user=user_obj)
-    token_value = f"Token {token.key}"
+    token_value = f'Token {token.key}'
     return token_value
 
 
@@ -58,12 +60,12 @@ def upload_avatar(data: Dict) -> Tuple[Optional[dict], ERROR]:
 
 
 def get_user_obj_by_mobile_number(
-        mobile_number: str,
+    mobile_number: str,
 ) -> Tuple[Optional[CustomUser], ERROR]:
     err = None
     user_obj = CustomUser.objects.filter(mobile_number=mobile_number).first()
     if user_obj is None:
-        err = existence_error("CustomUser")
+        err = existence_error('CustomUser')
         return None, err
 
     return user_obj, err
@@ -73,7 +75,7 @@ def get_user_obj_by_id(_id: int) -> Tuple[Optional[CustomUser], ERROR]:
     err = None
     user_obj = CustomUser.objects.filter(id=_id).first()
     if user_obj is None:
-        err = existence_error("CustomUser")
+        err = existence_error('CustomUser')
         return None, err
 
     return user_obj, err
@@ -82,7 +84,7 @@ def get_user_obj_by_id(_id: int) -> Tuple[Optional[CustomUser], ERROR]:
 def get_user_data(user_obj: object) -> Tuple[Optional[dict], ERROR]:
     err = None
     if user_obj is None:
-        err = existence_error("CustomUser")
+        err = existence_error('CustomUser')
         return None, err
 
     user_serialized = CostumUserSerializer(user_obj)
@@ -95,12 +97,12 @@ def get_user_objs() -> Optional[List[CustomUser]]:
 
 
 def get_user_all_data(
-        user_objs: List[CustomUser],
+    user_objs: List[CustomUser],
 ) -> Tuple[Optional[List[CustomUser]], ERROR]:
     err = None
 
     if user_objs.count() == 0:
-        err = existence_error("CustomUser")
+        err = existence_error('CustomUser')
         return None, err
 
     users_serialized = CostumUserSerializer(
@@ -118,8 +120,8 @@ def update_user(user_obj: object, data: Dict) -> Tuple[Optional[dict], ERROR]:
     err = None
 
     copy_data = deepcopy(data)
-    if copy_data["password"]:
-        copy_data["password"].drop()
+    if copy_data['password']:
+        copy_data['password'].drop()
 
     user_serialized = CostumUserSerializer(
         user_obj,

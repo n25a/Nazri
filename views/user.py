@@ -8,42 +8,41 @@ from internals.toolkit import response_creator
 
 class SignUp(APIView):
     def post(self, request):
-        mobile_number = request.data.get("mobile_number").strip()
-        password = request.data.get("password")
+        mobile_number = request.data.get('mobile_number').strip()
+        password = request.data.get('password')
 
         if not repo_user.mobile_number_validator(mobile_number):
             return Response(
                 {
-                    "status": "fail",
-                    "message": "invalid mobile number.",
+                    'status': 'fail',
+                    'message': 'invalid mobile number.',
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         repo_user.create_user(
-            name=request.data.get("name"),
+            name=request.data.get('name'),
             mobile_number=mobile_number,
             password=password,
         )
 
         return response_creator(
-            data="user created successfully.",
-            status="success",
+            data='user created successfully.',
+            status='success',
             status_code=status.HTTP_201_CREATED,
         )
 
 
 class SignIn(APIView):
     def post(self, request):
-
-        password = request.data.get("password")
-        mobile_number = request.data.get("mobile_number").strip()
+        password = request.data.get('password')
+        mobile_number = request.data.get('mobile_number').strip()
 
         if not repo_user.mobile_number_validator(mobile_number):
             return Response(
                 {
-                    "status": "fail",
-                    "message": "permission denied.",
+                    'status': 'fail',
+                    'message': 'permission denied.',
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
@@ -56,17 +55,13 @@ class SignIn(APIView):
 
         if not user_obj.check_password(password):
             return Response(
-                {
-                    "status": "fail",
-                    "message": "permission denied."
-                },
+                {'status': 'fail', 'message': 'permission denied.'},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         token = repo_user.create_token(user_obj)
         return response_creator(
-            data={"token": token},
-            status="success",
+            data={'token': token},
+            status='success',
             status_code=200,
         )
-

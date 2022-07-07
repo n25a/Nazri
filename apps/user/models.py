@@ -4,8 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from repositories.user_managers import CustomUserManager
 
 ROLE_CHOICES = (
-    (1, "user"),
-    (2, "Admin"),
+    (1, 'user'),
+    (2, 'Admin'),
 )
 
 
@@ -18,8 +18,8 @@ class CustomUser(AbstractUser):
 
     role = models.IntegerField(choices=ROLE_CHOICES, default=1)
 
-    USERNAME_FIELD = "mobile_number"
-    REQUIRED_FIELDS = ["name", "role"]
+    USERNAME_FIELD = 'mobile_number'
+    REQUIRED_FIELDS = ['name', 'role']
 
     objects = CustomUserManager()
 
