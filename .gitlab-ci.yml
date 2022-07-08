@@ -20,7 +20,7 @@ isort:
     when: always
 
 
-black:
+blue:
   stage: lint
   before_script:
     - pip install blue
@@ -38,7 +38,7 @@ flake8:
   before_script:
     - pip install flake8
   script:
-    - flake8 --exclude='.tox' --exclude='__init__.py' --extend-exclude='*_pb2*.py' .
+    - flake8 --exclude='.tox','__init__.py','venv/','settings.py' --extend-exclude='*_pb2*.py' .
 
   except:
     variables:
