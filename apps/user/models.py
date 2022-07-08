@@ -18,6 +18,8 @@ class CustomUser(AbstractUser):
 
     role = models.IntegerField(choices=ROLE_CHOICES, default=1)
 
+    rate = models.FloatField(default=0)
+
     USERNAME_FIELD = 'mobile_number'
     REQUIRED_FIELDS = ['name', 'role']
 

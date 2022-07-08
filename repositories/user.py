@@ -136,6 +136,21 @@ def update_user(user_obj: object, data: Dict) -> Tuple[Optional[dict], ERROR]:
     return user_serialized.data, err
 
 
+def rate_zeroer(user_id: int) -> ERROR:
+    user_obj = CustomUser.objects.filter(id=user_id).first()
+    if user_obj is None:
+        err = existence_error('CustomUser')
+        return err
+
+    user_serizalized = CostumUserSerializer(user_obj, data={'rate': 0})
+    if not user_serizalized.is_valid():
+        err = validate_error(user_serizalized)
+        return err
+    user_serizalized.save()
+
+    return None
+
+
 # ---------------------------  Set new Password -------------------------------
 
 

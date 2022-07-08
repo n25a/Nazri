@@ -11,4 +11,6 @@ class Penalty(models.Model):
 
     reason = models.ForeignKey(Reason)
 
+    payed = models.BooleanField(default=False)
+
     create_at = models.DateTimeField(auto_now_add=True)

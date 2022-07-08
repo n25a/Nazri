@@ -65,3 +65,20 @@ class SignIn(APIView):
             status='success',
             status_code=200,
         )
+
+
+class Users(APIView):
+    def get(self):
+        users, err = repo_user.get_user_objs()
+        if err:
+            return err
+
+        users_data, err = repo_user.get_user_all_data(users)
+        if err:
+            return err
+
+        return response_creator(
+            data=users_data,
+            status='success',
+            status_code=status.HTTP_200_OK,
+        )
