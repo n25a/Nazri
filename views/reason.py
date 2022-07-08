@@ -1,11 +1,18 @@
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
 
 import repositories.reason as repo_reason
 from internals.toolkit import response_creator
+from apps.user.permissions import IsAdmin
 
 
 class AddReason(APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsAdmin]
+
     def post(self, request):
         reason, err = repo_reason.create_reason(data=request.data)
         if err:
@@ -18,6 +25,10 @@ class AddReason(APIView):
 
 
 class GetReasons(APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsAdmin]
+
     def get(self, request):
         reasons, err = repo_reason.get_reason_objs()
         if err:
@@ -35,6 +46,10 @@ class GetReasons(APIView):
 
 
 class DeleteReason(APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsAdmin]
+
     def delete(self, request):
         _id = request.data.get('id')
 

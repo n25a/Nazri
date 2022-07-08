@@ -9,7 +9,7 @@ from internals.toolkit import response_creator
 class SignUp(APIView):
     def post(self, request):
         mobile_number = request.data.get('mobile_number').strip()
-        password = request.data.get('password')
+        password = request.data.get('passord')
 
         if not repo_user.mobile_number_validator(mobile_number):
             return Response(

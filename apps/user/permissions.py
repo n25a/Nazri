@@ -6,7 +6,7 @@ class IsAdmin(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user_role = request.user.role
-        if user_role == 2 or user_role == 3:
+        if user_role == 2:
             return True
 
         return False
