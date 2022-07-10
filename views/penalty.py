@@ -20,12 +20,12 @@ class Penalty(APIView):
     def post(self, request):
         reason_id = request.data.get('reason_id')
         user_id = request.data.get('user_id')
-        rate = request.data.get('penalty_amount')
+        rate = request.data.get('level')
 
         err = repo_penalty.create_penalty(
             {
                 'user': user_id,
-                'rate': rate,
+                'level': rate,
                 'reason': reason_id,
             }
         )
@@ -58,7 +58,7 @@ class GetPenalties(APIView):
             return err
 
         return response_creator(
-            data=penalties_data,
+            data={"penalties": penalties_data},
             status='success',
             status_code=status.HTTP_200_OK,
         )
@@ -69,7 +69,7 @@ class NazriGiver(APIView):
         user_objs = CustomUser.objects.filter(rate__gte=1)
         user_serialized = CustomUserSerializer(user_objs, many=True)
         return response_creator(
-            data=user_serialized.data,
+            data={"nazri_givers": user_serialized.data},
             status='success',
             status_code=status.HTTP_200_OK,
         )
@@ -94,7 +94,7 @@ class Pay(APIView):
         # TODO: send notification to user
 
         return response_creator(
-            data='penalty paid successfully.',
+            data='penalty payed successfully.',
             status='success',
             status_code=status.HTTP_200_OK,
         )

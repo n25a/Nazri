@@ -163,6 +163,91 @@ paths:
         500:
           description: 'internal server error'
 
+  '/penalty/add':
+    post:
+      tags:
+        - penalty
+      summary: add a penalty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason_id:
+                  type: integer
+                user_id:
+                  type: integer
+                level:
+                    type: integer
+              example:
+                reason_id: 12
+                user_id: 2
+                level: 3
+      responses:
+        201:
+          description: 'penalty submitted successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddPenalty'
+        500:
+          description: 'internal server error'
+
+  '/penalty/get':
+    get:
+      tags:
+        - penalty
+      summary: get all penalties that not payed
+      responses:
+        200:
+          description: 'get penalties successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPenalties'
+        500:
+          description: 'internal server error'
+
+  '/penalty/pay':
+    post:
+      tags:
+        - penalty
+      summary: add a penalty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+              example:
+                user_id: 2
+      responses:
+        200:
+          description: 'penalty submitted successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayPenalty'
+        500:
+          description: 'internal server error'
+
+  '/penalty/nazri-givers':
+    get:
+      tags:
+        - penalty
+      summary: get all penalties that not payed
+      responses:
+        200:
+          description: 'get penalties successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NazriGivers'
+        500:
+          description: 'internal server error'
 
 components:
   schemas:
@@ -272,3 +357,100 @@ components:
         data:
           type: string
           example: "reason 12 deleted"
+
+    AddPenalty:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: string
+          example: 'penalty added successfully.'
+
+    GetPenalties:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            penalties:
+              type: array
+              example: [
+                {
+                  "id": 1,
+                  "user": {
+                      "name": "John Doe",
+                      "mobile_number": "09032567890",
+                      "rate": 0.567345345345,
+                  },
+                  "reason_id": {
+                        "reason": "اولین حقوق",
+                        "create_at": "2020-01-01 00:00:00"
+                  },
+                  "level": 1,
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                },
+                {
+                  "id": 1,
+                  "user": {
+                    "name": "John Doe",
+                    "mobile_number": "09032567890",
+                    "rate": 0.567345345345,
+                  },
+                  "reason_id": {
+                    "reason": "اولین حقوق",
+                    "create_at": "2020-01-01 00:00:00"
+                  },
+                  "level": 1,
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                },
+              ]
+
+    PayPenalty:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: string
+          example: 'penalty payed successfully.'
+
+    NazriGivers:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            nazri_givers:
+              type: array
+              example: [
+                {
+                  "id": 1,
+                  "name": "John Doe",
+                  "mobile_number": "09032567890",
+                  "rate": 1.567345345345,
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                },
+                {
+                  "id": 1,
+                  "name": "John Doe",
+                  "mobile_number": "09032567890",
+                  "rate": 1.567345345345,
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                },
+              ]
+
+
+

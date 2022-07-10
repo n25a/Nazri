@@ -28,7 +28,7 @@ def penalizing(user_id: int):
         new_rate = penalty_obj.count() / max_penalty_number
     else:
         for penalty in penalty_data:
-            new_rate += penalty['rate'] / max_penalty_level
+            new_rate += penalty['level'] / max_penalty_level
 
     user_serialized = CustomUserSerializer(user_obj, data={'rate': new_rate})
     if not user_serialized.is_valid():
