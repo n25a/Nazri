@@ -78,7 +78,7 @@ class Users(APIView):
             return err
 
         return response_creator(
-            data=users_data,
+            data={"users": users_data},
             status='success',
             status_code=status.HTTP_200_OK,
         )

@@ -1,42 +1,103 @@
 openapi: 3.0.0
 info:
-  title: Radak API
+  title: Nazri API
   version: 0.1.9
 
 servers:
-  - url: http://api.radak.delta.com
+  - url: http://api.nazri.ir
     description: Main (production) server
   - url: http://staging-api.radak.delta.com
     description: Internal staging server for testing
 
 
 paths:
-  '/tse/{day_incrementor}/data':
-    get:
+  '/user/sign-up':
+    post:
       tags:
         - tse
-      summary: geetting data
-      parameters:
-        - in: path
-          name: day_incrementor
-          description: number of days to add to today's date'
-          required: true
-          schema:
-            type: string
+      summary: sign up in Nazri
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                mobile_number:
+                  type: string
+                password:
+                  type: string
+              example:
+                name: "John Doe"
+                mobile_number: "09032567890"
+                password: "qazwsx"
       responses:
         200:
           description: 'User created successfully'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TseData'
+                $ref: '#/components/schemas/SignUp'
         500:
           description: 'internal server error'
-  
+
+  '/user/sign-in':
+    post:
+      tags:
+        - tse
+      summary: sign in in Nazri
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mobile_number:
+                  type: string
+                password:
+                  type: string
+              example:
+                mobile_number: "09032567890"
+                password: "qazwsx"
+      responses:
+        200:
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignIn'
+        500:
+          description: 'internal server error'
+
+  '/user/get-users':
+    get:
+      tags:
+        - tse
+      summary: sign in in Nazri
+      responses:
+        200:
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsers'
+        500:
+          description: 'internal server error'
 
 components:
   schemas:
-    TseData:
+    SignUp:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: string
+          example: "user created successfully."
+
+    SignIn:
       type: object
       properties:
         status:
@@ -45,22 +106,35 @@ components:
         data:
           type: object
           properties:
-            tse_data:
-              type: array
-              items:
-                $ref: "#/definitions/Tse"
+            token:
+              type: string
+              example: "Token kjsdjfsdfjuisdjnf232jklen124eij23n452"
 
-definitions:
-  Tse:
-    type: object
-    properties:
-      subject:
-        type: string
-        example: "test"
-      window:
-        type: integer
-        example: 2
-      code:
-        type: string
-        example: "{if cnt < 6: return nil}"
-  
+    GetUsers:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            users:
+              type: array
+              example: [
+                {
+                  "id": 1,
+                  "name": "John Doe",
+                  "mobile_number": "09032567890",
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                },
+                {
+                  "id": 2,
+                  "name": "John Doe",
+                  "mobile_number": "09032567890",
+                  "created_at": "2020-01-01 00:00:00",
+                  "updated_at": "2020-01-01 00:00:00"
+                }
+              ]
+
