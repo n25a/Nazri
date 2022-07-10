@@ -31,7 +31,7 @@ paths:
                 mobile_number: "09032567890"
                 password: "qazwsx"
       responses:
-        200:
+        201:
           description: 'User created successfully'
           content:
             application/json:
@@ -60,7 +60,7 @@ paths:
                 password: "qazwsx"
       responses:
         200:
-          description: 'User created successfully'
+          description: 'User signed in successfully'
           content:
             application/json:
               schema:
@@ -72,7 +72,7 @@ paths:
     get:
       tags:
         - user
-      summary: sign in in Nazri
+      summary: get all users in Nazri
       requestBody:
         content:
           application/json:
@@ -88,7 +88,7 @@ paths:
                 password: "qazwsx"
       responses:
         200:
-          description: 'User created successfully'
+          description: 'Get all users successfully'
           content:
             application/json:
               schema:
@@ -113,7 +113,7 @@ paths:
               example:
                 reason: "اولین حقوق"
       responses:
-        200:
+        201:
           description: 'User created successfully'
           content:
             application/json:
@@ -213,7 +213,7 @@ paths:
     post:
       tags:
         - penalty
-      summary: add a penalty
+      summary: pay the penalty
       requestBody:
         content:
           application/json:
@@ -226,7 +226,7 @@ paths:
                 user_id: 2
       responses:
         200:
-          description: 'penalty submitted successfully'
+          description: 'payed penalty successfully'
           content:
             application/json:
               schema:
@@ -238,10 +238,10 @@ paths:
     get:
       tags:
         - penalty
-      summary: get all penalties that not payed
+      summary: get all nazri givers
       responses:
         200:
-          description: 'get penalties successfully'
+          description: 'get nazri givers successfully'
           content:
             application/json:
               schema:
