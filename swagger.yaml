@@ -6,15 +6,13 @@ info:
 servers:
   - url: http://api.nazri.ir
     description: Main (production) server
-  - url: http://staging-api.radak.delta.com
-    description: Internal staging server for testing
 
 
 paths:
   '/user/sign-up':
     post:
       tags:
-        - tse
+        - user
       summary: sign up in Nazri
       requestBody:
         content:
@@ -45,7 +43,7 @@ paths:
   '/user/sign-in':
     post:
       tags:
-        - tse
+        - user
       summary: sign in in Nazri
       requestBody:
         content:
@@ -73,8 +71,21 @@ paths:
   '/user/get-users':
     get:
       tags:
-        - tse
+        - user
       summary: sign in in Nazri
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mobile_number:
+                  type: string
+                password:
+                  type: string
+              example:
+                mobile_number: "09032567890"
+                password: "qazwsx"
       responses:
         200:
           description: 'User created successfully'
@@ -84,6 +95,74 @@ paths:
                 $ref: '#/components/schemas/GetUsers'
         500:
           description: 'internal server error'
+
+
+  '/reason/add':
+    post:
+      tags:
+        - reason
+      summary: add new reason
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+              example:
+                reason: "اولین حقوق"
+      responses:
+        200:
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddReason'
+        500:
+          description: 'internal server error'
+
+
+  '/reason/get':
+    post:
+      tags:
+        - reason
+      summary: get all reasons
+      responses:
+        200:
+          description: 'Get reasons successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReasons'
+        500:
+          description: 'internal server error'
+
+  '/reason/delete':
+    post:
+      tags:
+        - reason
+      summary: delete a reason
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+              example:
+                reason: 12
+      responses:
+        200:
+          description: 'reason deleted successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteReason'
+        500:
+          description: 'internal server error'
+
 
 components:
   schemas:
@@ -138,3 +217,58 @@ components:
                 }
               ]
 
+    AddReason:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            reason:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                reason:
+                  type: string
+                  example: "اولین حقوق"
+                create_at:
+                    type: string
+                    example: "2020-01-01 00:00:00"
+
+    GetReasons:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            reasons:
+              type: array
+              example: [
+                {
+                  "id": 1,
+                  "reason": "اولین حقوق",
+                  "create_at": "2020-01-01 00:00:00"
+                },
+                {
+                  "id": 2,
+                  "reason": "اولین حقوق",
+                  "create_at": "2020-01-01 00:00:00"
+                }
+              ]
+
+    DeleteReason:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        data:
+          type: string
+          example: "reason 12 deleted"
