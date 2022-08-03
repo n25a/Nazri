@@ -1,5 +1,10 @@
 name: Lint
 
+on:
+  push:
+    branches:
+      - '*'
+
 jobs:
   lint:
     name: check lint
@@ -17,4 +22,3 @@ jobs:
       run: isort --check-only --skip-glob=.tox --reverse-sort --profile=black .
       run: blue --check .
       run: flake8 --exclude='.tox','__init__.py','venv/','settings.py' --extend-exclude='*_pb2*.py' .
-      
