@@ -39,7 +39,7 @@ class GetReasons(APIView):
             return err
 
         return response_creator(
-            data={"reasons": reasons_data},
+            data={'reasons': reasons_data},
             status='success',
             status_code=status.HTTP_200_OK,
         )

@@ -58,7 +58,7 @@ class GetPenalties(APIView):
             return err
 
         return response_creator(
-            data={"penalties": penalties_data},
+            data={'penalties': penalties_data},
             status='success',
             status_code=status.HTTP_200_OK,
         )
@@ -69,7 +69,7 @@ class NazriGiver(APIView):
         user_objs = CustomUser.objects.filter(rate__gte=1)
         user_serialized = CustomUserSerializer(user_objs, many=True)
         return response_creator(
-            data={"nazri_givers": user_serialized.data},
+            data={'nazri_givers': user_serialized.data},
             status='success',
             status_code=status.HTTP_200_OK,
         )

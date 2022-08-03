@@ -4,10 +4,7 @@ from copy import deepcopy
 from rest_framework.authtoken.models import Token
 
 from internals.toolkit import validate_error, existence_error, ERROR
-from apps.user.serializers import (
-    CostumUserSerializer,
-    CostumUserAvatarSerializer,
-)
+from apps.user.serializers import CustomUserSerializer
 from apps.user.models import CustomUser
 
 # ---------------------- mobile_number validation ----------------------------
@@ -41,19 +38,20 @@ def create_user(name: str, mobile_number: str, password: str) -> CustomUser:
     return user_obj
 
 
-def upload_avatar(data: Dict) -> Tuple[Optional[dict], ERROR]:
-    err = None
-
-    avatar_serialized = CostumUserAvatarSerializer(
-        data=data,
-    )
-
-    if not avatar_serialized.is_valid():
-        err = validate_error(avatar_serialized)
-        return None, err
-    avatar_serialized.save()
-
-    return avatar_serialized.data, err
+#
+# def upload_avatar(data: Dict) -> Tuple[Optional[dict], ERROR]:
+#     err = None
+#
+#     avatar_serialized = CostumUserAvatarSerializer(
+#         data=data,
+#     )
+#
+#     if not avatar_serialized.is_valid():
+#         err = validate_error(avatar_serialized)
+#         return None, err
+#     avatar_serialized.save()
+#
+#     return avatar_serialized.data, err
 
 
 # --------------------------- GET ----------------------------------
@@ -87,7 +85,7 @@ def get_user_data(user_obj: object) -> Tuple[Optional[dict], ERROR]:
         err = existence_error('CustomUser')
         return None, err
 
-    user_serialized = CostumUserSerializer(user_obj)
+    user_serialized = CustomUserSerializer(user_obj)
     return user_serialized.data, err
 
 
@@ -105,7 +103,7 @@ def get_user_all_data(
         err = existence_error('CustomUser')
         return None, err
 
-    users_serialized = CostumUserSerializer(
+    users_serialized = CustomUserSerializer(
         user_objs,
         many=True,
     )
@@ -123,7 +121,7 @@ def update_user(user_obj: object, data: Dict) -> Tuple[Optional[dict], ERROR]:
     if copy_data['password']:
         copy_data['password'].drop()
 
-    user_serialized = CostumUserSerializer(
+    user_serialized = CustomUserSerializer(
         user_obj,
         data=data,
         partial=True,
@@ -142,11 +140,11 @@ def rate_zeroer(user_id: int) -> ERROR:
         err = existence_error('CustomUser')
         return err
 
-    user_serizalized = CostumUserSerializer(user_obj, data={'rate': 0})
-    if not user_serizalized.is_valid():
-        err = validate_error(user_serizalized)
+    user_serialized = CustomUserSerializer(user_obj, data={'rate': 0})
+    if not user_serialized.is_valid():
+        err = validate_error(user_serialized)
         return err
-    user_serizalized.save()
+    user_serialized.save()
 
     return None
 
@@ -157,7 +155,7 @@ def rate_zeroer(user_id: int) -> ERROR:
 def set_password(user_obj: object, data: Dict) -> Tuple[Optional[dict], ERROR]:
     err = None
 
-    user_serialized = CostumUserSerializer(
+    user_serialized = CustomUserSerializer(
         user_obj,
         data=data,
         partial=True,
