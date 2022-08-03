@@ -8,8 +8,8 @@ services:
        - "8000:8000"
      depends_on:
        - db
-       - redis
-       - rabbitmq
+#       - redis
+#       - rabbitmq
   db:
     image: mariadb:10.4.8
     ports:
