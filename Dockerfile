@@ -9,8 +9,8 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY requirments.txt /etc/opt/nazri/
-RUN pip install -r requirments.txt
+COPY requirements.txt /etc/opt/nazri/
+RUN pip install -r requirements.txt
 
 # copy project
 COPY . /etc/opt/nazri
