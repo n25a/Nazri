@@ -2,15 +2,9 @@ config:
   app_name: "nazri"
   db:
     mysql:
-      name:     "test"
-      user:     "test_user"
+      name:     "nazri"
+      user:     "nazri_app"
       password: "password"
-    influx:
-      name:     "test"
-      user:     "test_user"
-      password: "password"
-      timeout:  10
-      token: ""
   cache:
     CACHE_TTL: 3600
   celery:

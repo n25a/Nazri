@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import CostumUser
+from .models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CostumUser
+        model = CustomUser
         fields = [
             'id',
             'name',

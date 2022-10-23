@@ -9,7 +9,7 @@ from internals.app import ascii_art
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nazri2.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nazri.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

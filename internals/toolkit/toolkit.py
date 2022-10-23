@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from rest_framework.response import Response
 
@@ -33,11 +33,11 @@ def existence_error(object_name: str) -> ERROR:
 
 
 def response_creator(
-    data: Optional[dict, str] = None,
+    data: Union[dict, str] = None,
     status_code: int = 200,
     json_type: bool = False,
     status: str = 'success',
-) -> Response:
+) -> Union[Response, dict]:
     """
     create response
     """

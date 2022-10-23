@@ -9,7 +9,7 @@ class Penalty(models.Model):
 
     level = models.IntegerField(default=0)
 
-    reason = models.ForeignKey(Reason)
+    reason = models.ForeignKey(Reason, on_delete=models.CASCADE)
 
     payed = models.BooleanField(default=False)
 
