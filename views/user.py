@@ -9,7 +9,7 @@ from internals.toolkit import response_creator
 class SignUp(APIView):
     def post(self, request):
         mobile_number = request.data.get('mobile_number').strip()
-        password = request.data.get('passord')
+        password = request.data.get('password')
 
         if not repo_user.mobile_number_validator(mobile_number):
             return Response(
@@ -42,7 +42,7 @@ class SignIn(APIView):
             return Response(
                 {
                     'status': 'fail',
-                    'message': 'permission denied.',
+                    'message': 'permission denied. mobile number is invalid.',
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
@@ -53,9 +53,10 @@ class SignIn(APIView):
         if err:
             return err
 
+        print(user_obj.check_password(password), password, user_obj.password, user_obj.name)
         if not user_obj.check_password(password):
             return Response(
-                {'status': 'fail', 'message': 'permission denied.'},
+                {'status': 'fail', 'message': 'permission denied. password is invalid.'},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -68,10 +69,8 @@ class SignIn(APIView):
 
 
 class Users(APIView):
-    def get(self):
-        users, err = repo_user.get_user_objs()
-        if err:
-            return err
+    def get(self, _):
+        users = repo_user.get_user_objs()
 
         users_data, err = repo_user.get_user_all_data(users)
         if err:

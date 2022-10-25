@@ -9,12 +9,14 @@ from internals.toolkit import response_creator
 from apps.user.serializers import CustomUserSerializer
 from apps.user.permissions import IsAdmin
 from apps.user.models import CustomUser
+from apps.penalty.models import Penalty
+
 
 max_penalty_level = 11
 max_penalty_number = 8
 
 
-class Penalty(APIView):
+class PenaltyView(APIView):
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsAdmin]
@@ -25,7 +27,7 @@ class Penalty(APIView):
             This task is used to penalize a user.
             """
             user_obj = CustomUser.objects.get(id=user_id)
-            penalty_obj = Penalty.objects.filter(user=user_obj, paid=False)
+            penalty_obj = Penalty.objects.filter(user=user_obj, payed=False)
             if penalty_obj.count() == 0:
                 return Exception('No penalty found for this user.')
 
@@ -40,7 +42,7 @@ class Penalty(APIView):
                 for penalty in penalty_data:
                     new_rate += penalty['level'] / max_penalty_level
 
-            user_serialized = CustomUserSerializer(user_obj, data={'rate': new_rate})
+            user_serialized = CustomUserSerializer(user_obj, data={'rate': new_rate}, partial=True)
             if not user_serialized.is_valid():
                 return Exception('User serializer is not valid.')
             user_serialized.save()
@@ -51,7 +53,7 @@ class Penalty(APIView):
         user_id = request.data.get('user_id')
         rate = request.data.get('level')
 
-        err = repo_penalty.create_penalty(
+        _, err = repo_penalty.create_penalty(
             {
                 'user': user_id,
                 'level': rate,
@@ -74,9 +76,6 @@ class Penalty(APIView):
 
 class GetPenalties(APIView):
 
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsAdmin]
-
     def get(self, request):
         penalties, err = repo_penalty.get_penalty_objs()
         if err:
@@ -94,7 +93,7 @@ class GetPenalties(APIView):
 
 
 class NazriGiver(APIView):
-    def get(self):
+    def get(self, _):
         user_objs = CustomUser.objects.filter(rate__gte=1)
         user_serialized = CustomUserSerializer(user_objs, many=True)
         return response_creator(

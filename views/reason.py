@@ -25,11 +25,7 @@ class AddReason(APIView):
 
 
 class GetReasons(APIView):
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsAdmin]
-
-    def get(self, request):
+    def get(self, _):
         reasons, err = repo_reason.get_reason_objs()
         if err:
             return err

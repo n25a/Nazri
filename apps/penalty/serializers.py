@@ -14,5 +14,11 @@ class PenaltySerializer(serializers.ModelSerializer):
 class PenaltyDeepSerializer(serializers.ModelSerializer):
     class Meta:
         model = Penalty
-        fields = '__all__'
+        fields = [
+            'level',
+            'reason',
+            'payed',
+            'create_at',
+            'modified_at',
+        ]
         depth = 1
