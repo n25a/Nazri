@@ -11,7 +11,7 @@ services:
    db:
     image: mariadb:10.4.8
     ports:
-    - 3306:3306
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "root-secure-password"
       MYSQL_USER: "nazri_app"
