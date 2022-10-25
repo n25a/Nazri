@@ -4,6 +4,8 @@ services:
    web:
      build: .
      command: python manage.py runserver 0.0.0.0:8000
+     volumes:
+       - .:/etc/opt/nazri
      ports:
        - "8000:8000"
      depends_on:

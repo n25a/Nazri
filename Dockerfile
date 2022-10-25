@@ -8,9 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-RUN sudo pip install --upgrade pip
+RUN pip install --upgrade pip
 COPY requirements.txt /etc/opt/nazri/
-RUN sudo pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # copy project
 COPY . /etc/opt/nazri
