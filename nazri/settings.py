@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': c.db.mysql.name,
         'USER': c.db.mysql.user,
         'PASSWORD': c.db.mysql.password,
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '3306',
     }
 }
