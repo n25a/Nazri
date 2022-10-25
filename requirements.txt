@@ -19,3 +19,4 @@ PyYAML==6.0
 sqlparse==0.4.2
 tomli==2.0.1
 typing-extensions==4.3.0
+psycopg2>=2.8.6,<2.9
