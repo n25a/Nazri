@@ -73,19 +73,6 @@ paths:
       tags:
         - user
       summary: get all users in Nazri
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                mobile_number:
-                  type: string
-                password:
-                  type: string
-              example:
-                mobile_number: "09032567890"
-                password: "qazwsx"
       responses:
         200:
           description: 'Get all users successfully'
@@ -124,7 +111,7 @@ paths:
 
 
   '/reason/get':
-    post:
+    get:
       tags:
         - reason
       summary: get all reasons
@@ -139,7 +126,7 @@ paths:
           description: 'internal server error'
 
   '/reason/delete':
-    post:
+    delete:
       tags:
         - reason
       summary: delete a reason
@@ -152,7 +139,7 @@ paths:
                 id:
                   type: integer
               example:
-                reason: 12
+                id: 12
       responses:
         200:
           description: 'reason deleted successfully'
@@ -210,7 +197,7 @@ paths:
           description: 'internal server error'
 
   '/penalty/pay':
-    post:
+    patch:
       tags:
         - penalty
       summary: pay the penalty

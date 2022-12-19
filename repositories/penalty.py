@@ -10,7 +10,7 @@ from apps.penalty.models import Penalty
 def create_penalty(data: Dict) -> Tuple[Optional[Dict], ERROR]:
     penalty_serialized = PenaltySerializer(data=data)
     if not penalty_serialized.is_valid():
-        err = validate_error(penalty_serialized.errors)
+        err = validate_error(penalty_serialized)
         return None, err
     penalty_serialized.save()
 
@@ -76,9 +76,9 @@ def pay_penalty(user_id: int) -> ERROR:
     penalties = Penalty.objects.filter(user=user_id, payed=False)
 
     for penalty in penalties:
-        penalty_serialized = PenaltySerializer(penalty, data={'payed': True})
+        penalty_serialized = PenaltySerializer(penalty, data={'payed': True}, partial=True)
         if not penalty_serialized.is_valid():
-            err = validate_error(penalty_serialized.errors)
+            err = validate_error(penalty_serialized)
             return err
         penalty_serialized.save()
 

@@ -140,7 +140,7 @@ def rate_zeroer(user_id: int) -> ERROR:
         err = existence_error('CustomUser')
         return err
 
-    user_serialized = CustomUserSerializer(user_obj, data={'rate': 0})
+    user_serialized = CustomUserSerializer(user_obj, data={'rate': 0}, partial=True)
     if not user_serialized.is_valid():
         err = validate_error(user_serialized)
         return err

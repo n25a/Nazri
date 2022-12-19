@@ -1,4 +1,4 @@
-"""nazri2 URL Configuration
+"""nazri URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('urls.user')),
     path('penalty/', include('urls.penalty')),
-    path('reason/', include('urls.reason')),
+    path('reason/', include('urls.reasons')),
 ]
