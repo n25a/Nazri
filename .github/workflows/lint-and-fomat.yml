@@ -16,8 +16,8 @@ jobs:
           pre: true
           upgrade: false
 
-      - name: isort
-        run: isort --check-only --skip-glob=.tox --reverse-sort --profile=black .
+      # - name: isort
+      #   run: isort --check-only --skip-glob=.tox --reverse-sort --profile=black .
 
       - name: linter
         run: blue --check .
