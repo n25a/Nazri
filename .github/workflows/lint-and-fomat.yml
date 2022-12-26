@@ -22,5 +22,5 @@ jobs:
       # - name: linter
       #   run: blue --check .
 
-      - name: formatter
-        run: flake8 --exclude='.tox','__init__.py','venv/','settings.py' --extend-exclude='*_pb2*.py' .
+      # - name: formatter
+      #   run: flake8 --exclude='.tox','__init__.py','venv/','settings.py' --extend-exclude='*_pb2*.py' .
