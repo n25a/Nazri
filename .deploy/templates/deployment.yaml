@@ -35,14 +35,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: DEFAULT_DB_USER
-              value: "postgres"
+              value: "nazri_app"
             - name: DEFAULT_DB_NAME
               value: "nazri"
             - name: DEFAULT_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: postgres-password
-                  name: nazri-db-postgresql
+              value: "password"
             - name: DEFAULT_DB_HOST
               value: "nazri-db-postgresql.nazri.svc.cluster.local"
             - name: DEFAULT_DB_PORT

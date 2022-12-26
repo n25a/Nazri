@@ -82,6 +82,7 @@ mariadb:
     database: nazri
     username: "nazri_app"
     password: "password"
+    rootPassword: "password"
 
   primary:
     podSecurityContext:
