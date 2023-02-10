@@ -1,3 +1,5 @@
+import tomli
+
 # ----------------------------------------------------------------
 #                               DB
 # ----------------------------------------------------------------
@@ -21,17 +23,6 @@ class Database:
 class Cache:
     CACHE_TTL: int = 0
 
-
-# ----------------------------------------------------------------
-#                             Celery
-# ----------------------------------------------------------------
-
-
-class Celery:
-    redis_broker: bool = False
-    rabbitMQ_broker: bool = False
-
-
 # ----------------------------------------------------------------
 #                               Config
 # ----------------------------------------------------------------
@@ -41,7 +32,15 @@ class Config:
     app_name: str = ''
     db: Database = Database()
     cache: Cache = Cache()
-    celery: Celery = Celery()
+
+    def __init__(self):
+        with open("config.toml", mode="rb") as fp:
+            config = tomli.load(fp)
+            self.app_name = config["app"]["app_name"]
+            self.db.mysql.name = config["db-mysql"]["name"]
+            self.db.mysql.user = config["db-mysql"]["user"]
+            self.db.mysql.password = config["db-mysql"]["password"]
+            self.cache.CACHE_TTL = config["cache"]["CACHE_TTL"]
 
 
 # ----------------------------------------------------------------

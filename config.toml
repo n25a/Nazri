@@ -1,0 +1,10 @@
+[app]
+app_name= "nazri"
+
+[db-mysql]
+name     = "nazri"
+user     = "nazri_app"
+password = "password"
+
+[cache]
+CACHE_TTL = 3600

@@ -23,5 +23,4 @@ def main():
 
 if __name__ == '__main__':
     ascii_art.project_name()
-    config_wrapper.wrapper()
     main()
