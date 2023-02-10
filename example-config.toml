@@ -2,7 +2,7 @@
 app_name= "nazri"
 
 [db-mysql]
-host     = "127.0.0.1"
+host     = "db"
 port     = 3306
 name     = "nazri"
 user     = "nazri_app"

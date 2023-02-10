@@ -6,6 +6,8 @@ import tomli
 
 
 class Mysql:
+    host: str = ''
+    port: int = 0
     name: str = ''
     user: str = ''
     password: str = ''
@@ -37,6 +39,8 @@ class Config:
         with open("config.toml", mode="rb") as fp:
             config = tomli.load(fp)
             self.app_name = config["app"]["app_name"]
+            self.db.mysql.host = config["db-mysql"]["host"]
+            self.db.mysql.port = config["db-mysql"]["port"]
             self.db.mysql.name = config["db-mysql"]["name"]
             self.db.mysql.user = config["db-mysql"]["user"]
             self.db.mysql.password = config["db-mysql"]["password"]
